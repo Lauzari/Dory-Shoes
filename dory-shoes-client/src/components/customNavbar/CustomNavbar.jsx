@@ -144,18 +144,21 @@ const CustomNavbar = () => {
               }
             }}
           />
-          {isAuthenticated && (
-            <FaShoppingCart
-              className="icon"
-              onClick={() => setActive(!active)}
-            />
-          )}
-          {isAuthenticated && (
-            <div className="count-product">
-              <span id="count-product">{Number(countProduct) || 0}</span>
-            </div>
-          )}
+          {/* only for demo: show shopping cart without authentication */}
+          <FaShoppingCart
+            className="icon"
+            onClick={() => setActive(!active)}
+          />
+          {/* only for demo: always show product count */}
+          <div className="count-product">
+            <span id="count-product">{Number(countProduct) || 0}</span>
+          </div>
           {active && <Cart isActive={active} onActive={setActive} />}
+          
+          {/* 
+          ORIGINAL CODE - COMMENTED FOR DEMO: 
+          isAuthenticated condition removed for demo mode
+          */}
         </div>
       </Container>
     </Navbar>

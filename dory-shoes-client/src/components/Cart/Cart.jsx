@@ -9,13 +9,20 @@ import "react-toastify/dist/ReactToastify.css";
 import "./cart.css";
 
 const Cart = ({ isActive, onActive }) => {
+  // only for demo: destructure local cart functions
+  const { removeFromCartLocal, clearCartLocal, products } =
+    useContext(CartContext);
+
+  /* ORIGINAL BACKEND CODE - COMMENTED FOR DEMO
   const { fetchCart, products, cartId } =
     useContext(CartContext);
+  */
 
   const [total, setTotal] = useState();
 
   const navigate = useNavigate();
-  const { isAuthenticated, token } = useAuth();
+  // only for demo: don't need auth hook for local cart, but keep it commented
+  // const { isAuthenticated, token } = useAuth(); // COMMENTED FOR DEMO
 
   useEffect(() => {
     const totalCalculado = products?.reduce((acc, product) => {
@@ -26,6 +33,23 @@ const Cart = ({ isActive, onActive }) => {
     setTotal(totalCalculado);
   }, [products]);
 
+  // only for demo: remove product from local cart
+  const onDeleteProduct = (productId) => {
+    removeFromCartLocal(productId);
+    toast.error("🗑️ Producto eliminado", {
+      position: "bottom-left",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: false,
+      pauseOnHover: false,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+      transition: Bounce,
+    });
+  };
+
+  /* ORIGINAL BACKEND DELETE - COMMENTED FOR DEMO
   const onDeleteProduct = async (productId) => {
     const response = await fetch(`http://localhost:3000/cart`, {
       method: "DELETE",
@@ -56,10 +80,16 @@ const Cart = ({ isActive, onActive }) => {
       await fetchCart();
     }
   };
+  */
 
+  // only for demo: clear entire cart locally
+  const onclickCart = () => {
+    clearCartLocal();
+    console.log("Carrito vaciado");
+  };
+
+  /* ORIGINAL BACKEND CLEAR CART - COMMENTED FOR DEMO
   const onclickCart = async () => {
-    
-
     const response = await fetch(`http://localhost:3000/allCart`, {
       method: "DELETE",
       headers: {
@@ -76,8 +106,11 @@ const Cart = ({ isActive, onActive }) => {
       console.log("Carrito vaciado");
     }
   };
+  */
 
+  // only for demo: navigate to shopping without login requirement
   const handlenav = () => {
+    /* ORIGINAL AUTHENTICATION CHECK - COMMENTED FOR DEMO
     if (!isAuthenticated) {
       toast.error("⚠️ Debes iniciar sesión para finalizar la compra", {
         position: "bottom-left",
@@ -87,6 +120,7 @@ const Cart = ({ isActive, onActive }) => {
       });
       return;
     }
+    */
     onActive(false);
     navigate("/shopping");
   };

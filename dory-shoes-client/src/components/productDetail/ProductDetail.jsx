@@ -8,11 +8,17 @@ import { CartContext } from "../Service/CartContext/CartContext";
 import { toast, Bounce, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useAuth } from "../../hooks/useAuth.js";
+// only for demo: import local product data
+import ProductData from "../../data/products.json";
 
 function ProductDetail() {
-  const { fetchCart} = useContext(CartContext);
+  // only for demo: destructure local cart functions
+  const { addToCartLocal, toggleFavoriteLocal } = useContext(CartContext);
 
+  /* ORIGINAL BACKEND CODE - COMMENTED FOR DEMO
+  const { fetchCart} = useContext(CartContext);
   const { id, token } = useAuth();
+  */
 
   const navigate = useNavigate();
   const { productId } = useParams();
@@ -23,6 +29,39 @@ function ProductDetail() {
   const [showModal, setShowModal] = useState(false);
   const [showModalProduct, setShowModalProduct] = useState(false);
 
+  // only for demo: Load product from local data
+  useEffect(() => {
+    fetchProductoLocal();
+  }, [productId]);
+
+  const fetchProductoLocal = () => {
+    try {
+      const foundProduct = ProductData.find(p => p.id === Number(productId));
+      if (!foundProduct) {
+        navigate("/");
+        throw new Error("Producto no encontrado");
+      }
+      // only for demo: normalize product data structure
+      const normalizedProduct = {
+        ...foundProduct,
+        name: foundProduct.nombre,
+        price: foundProduct.precio,
+        imageUrl: foundProduct.imagen,
+        category: foundProduct.categoria,
+        productSizes: Object.entries(foundProduct.size).map(([sizeKey, stock]) => ({
+          size: sizeKey,
+          stock: stock
+        })),
+        favourite: null // only for demo: no favorites from backend
+      };
+      setProduct(normalizedProduct);
+      setFavourite(null);
+    } catch (err) {
+      console.log(err.message);
+    }
+  };
+
+  /* ORIGINAL BACKEND FETCH - COMMENTED FOR DEMO
   useEffect(() => {
     fetchProducto();
   }, []);
@@ -48,7 +87,40 @@ function ProductDetail() {
       console.log(err.message);
     }
   };
+  */
 
+  // only for demo: add to cart without authentication
+  const handleAddToCart = () => {
+    if (!selectedSize) {
+      toast.error("Seleccione un talle para continuar", {
+        position: "bottom-left",
+        autoClose: 5000,
+        theme: "light",
+        transition: Bounce,
+      });
+      return;
+    }
+    try {
+      addToCartLocal(product, selectedSize);
+      toast.success("✔️ Producto agregado al carrito", {
+        position: "bottom-left",
+        autoClose: 5000,
+        theme: "light",
+        pauseOnHover: false,
+        transition: Bounce,
+      });
+    } catch (err) {
+      console.error(err.message);
+      toast.error("❌ Error al agregar producto al carrito", {
+        position: "bottom-left",
+        autoClose: 5000,
+        theme: "light",
+        transition: Bounce,
+      });
+    }
+  };
+
+  /* ORIGINAL BACKEND CART ADD - COMMENTED FOR DEMO
   const handleAddToCart = async () => {
     if (!token) {
       toast.error("Debe iniciar sesión para comenzar a comprar", {
@@ -107,7 +179,32 @@ function ProductDetail() {
       });
     }
   };
+  */
 
+  // only for demo: toggle favorite without authentication
+  const toggleFavorite = () => {
+    if (favourite) {
+      toggleFavoriteLocal(product.id, false);
+      setFavourite(null);
+      toast.error("💔 Producto eliminado de favoritos", {
+        position: "bottom-left",
+        autoClose: 5000,
+        theme: "light",
+        transition: Bounce,
+      });
+    } else {
+      toggleFavoriteLocal(product.id, true);
+      setFavourite({ id: product.id }); // only for demo: simple favorite object
+      toast.success("❤️ Producto agregado a favoritos", {
+        position: "bottom-left",
+        autoClose: 5000,
+        theme: "light",
+        transition: Bounce,
+      });
+    }
+  };
+
+  /* ORIGINAL BACKEND FAVORITES - COMMENTED FOR DEMO
   const toggleFavorite = () => {
     if (token) {
       if (favourite) {
@@ -178,6 +275,7 @@ function ProductDetail() {
       console.log(err.message);
     }
   };
+  */
 
   return (
     <div className="product-detail">

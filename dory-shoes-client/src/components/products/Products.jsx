@@ -12,9 +12,27 @@ function Products() {
   const queryParams = new URLSearchParams(location.search);
   const search = queryParams.get("search"); // esto te da el string original, ya decodificado
 
+  // only for demo: Load products from local JSON data
+  useEffect(() => {
+    const normalizedProducts = ProductData.map(prod => ({
+      ...prod,
+      name: prod.nombre,
+      price: prod.precio,
+      imageUrl: prod.imagen,
+      category: prod.categoria,
+      productSizes: Object.entries(prod.size).map(([sizeKey, stock]) => ({
+        size: sizeKey,
+        stock: stock
+      }))
+    }));
+    setProducts(normalizedProducts);
+  }, []);
+
+  /* ORIGINAL BACKEND CODE - COMMENTED FOR DEMO
   useEffect(() => {
     fetchProducts();
   }, []);
+  */
 
   // Filtra los productos por la categoría
   const productosFiltrados = products.filter((producto) => {
@@ -29,12 +47,14 @@ function Products() {
     return coincideCategoria && coincideBusqueda;
   });
 
+  /* ORIGINAL BACKEND FETCH - COMMENTED FOR DEMO
   const fetchProducts = async () => {
       await fetch("http://localhost:3000/products")
       .then((res) => res.json())
       .then((data) => setProducts([...data]))
       .catch((err) => console.log(err));
   };
+  */
 
   function capitalizeFirstLetter(string) {
   if (!string) return ""; // Por si el string está vacío o es null
