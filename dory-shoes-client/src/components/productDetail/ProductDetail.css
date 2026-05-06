@@ -19,10 +19,15 @@
   border-radius: 10px;
   margin-bottom: 20px;
   transition: transform 0.3s;
+  user-select: none;
 }
 
 .product-image:hover {
   transform: scale(1.02);
+}
+
+.product-title {
+  user-select: none;
 }
 
 .sizes {

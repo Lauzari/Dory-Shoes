@@ -1,6 +1,6 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
-import { BrowserRouter } from 'react-router-dom';
+import { HashRouter } from 'react-router-dom';
 import './index.css';
 import App from './App.jsx';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
@@ -11,12 +11,12 @@ import { UserProvider } from './components/Service/auth/usercontext/UserContext.
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <BrowserRouter>
+    <HashRouter>
       <UserProvider>
         <CartProvider>
           <App />
         </CartProvider>
       </UserProvider>
-    </BrowserRouter>
+    </HashRouter>
   </StrictMode>
 );

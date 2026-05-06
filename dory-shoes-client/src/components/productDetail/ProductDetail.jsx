@@ -288,7 +288,7 @@ function ProductDetail() {
         style={{ cursor: "pointer" }}
       />
 
-      <h2>{product?.name}</h2>
+      <h2 className="product-title">{product?.name}</h2>
       <p>${product?.price}</p>
 
       <div className="sizes">
