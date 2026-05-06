@@ -29,6 +29,10 @@ function ProductDetail() {
   const [showModal, setShowModal] = useState(false);
   const [showModalProduct, setShowModalProduct] = useState(false);
 
+  const imageSrc = product?.imageUrl
+    ? `${import.meta.env.BASE_URL}${product.imageUrl.replace(/^\//, '')}`
+    : "";
+
   // only for demo: Load product from local data
   useEffect(() => {
     fetchProductoLocal();
@@ -281,8 +285,8 @@ function ProductDetail() {
     <div className="product-detail">
       <ToastContainer />
       <img
-        src={`${import.meta.env.BASE_URL}${product?.imageUrl.replace(/^\//, '')}`}
-        alt={product?.name}
+        src={imageSrc}
+        alt={product?.name ?? "Producto"}
         className="product-image"
         onClick={() => setShowModal(true)}
         style={{ cursor: "pointer" }}
@@ -294,7 +298,7 @@ function ProductDetail() {
       <div className="sizes">
         <p>Selecciona un talle:</p>
         <div className="size-options">
-          {product?.productSizes.map((sizeObj) => (
+          {(product?.productSizes ?? []).map((sizeObj) => (
             <button
               key={sizeObj.size}
               onClick={() => setSelectedSize(sizeObj.size)}
@@ -319,12 +323,14 @@ function ProductDetail() {
         {favourite ? <AiFillHeart /> : <AiOutlineHeart />} Favorito
       </button>
 
-      <ModalImage
-        show={showModal}
-        onClose={() => setShowModal(false)}
-        image={product?.imageUrl}
-        alt={product?.name}
-      />
+      {product && (
+        <ModalImage
+          show={showModal}
+          onClose={() => setShowModal(false)}
+          image={product.imageUrl}
+          alt={product.name}
+        />
+      )}
       <ModalProduct
         show={showModalProduct}
         onHide={() => setShowModalProduct(false)}
