@@ -107,7 +107,7 @@ const Shopping = () => {
               <div className="inf-summary" key={index}>
                 <div className="image-summary">
                   <img
-                    src={product.productSize.product.imageUrl}
+                    src={`${import.meta.env.BASE_URL}${product.productSize.product.imageUrl.replace(/^\//, '')}`}
                     alt={product.productSize.product.name}
                     style={{ width: "120px", maxHeight:"150px" }}
                   />

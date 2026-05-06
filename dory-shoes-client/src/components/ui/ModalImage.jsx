@@ -8,7 +8,7 @@ function ModalImage({ show, onClose, image, alt }) {
       </Modal.Header>
       <Modal.Body className="text-center">
         <img
-          src={image}
+          src={`${import.meta.env.BASE_URL}${image.replace(/^\//, '')}`}
           alt={alt}
           className="modal-image"
         />

@@ -108,7 +108,7 @@ const ProductsDashboard = ({ openConfirmModal }) => {
               <tr key={product.id}>
                 <td>
                   <img
-                    src={product.imageUrl}
+                    src={`${import.meta.env.BASE_URL}${product.imageUrl.replace(/^\//, '')}`}
                     alt={product.name}
                     className="product-img"
                   />

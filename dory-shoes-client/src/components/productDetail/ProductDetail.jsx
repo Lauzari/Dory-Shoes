@@ -281,7 +281,7 @@ function ProductDetail() {
     <div className="product-detail">
       <ToastContainer />
       <img
-        src={product?.imageUrl}
+        src={`${import.meta.env.BASE_URL}${product?.imageUrl.replace(/^\//, '')}`}
         alt={product?.name}
         className="product-image"
         onClick={() => setShowModal(true)}

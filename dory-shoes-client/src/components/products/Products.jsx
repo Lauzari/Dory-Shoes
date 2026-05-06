@@ -72,7 +72,7 @@ function Products() {
               <div key={producto.id} className="col-md-3 mb-4">
                 <div className="card">
                   <img
-                    src={producto.imageUrl}
+                    src={`${import.meta.env.BASE_URL}${producto.imageUrl.replace(/^\//, '')}`}
                     alt={producto.name}
                     className="card-img-top"
                     style={{ height: "200px", objectFit: "cover" }}

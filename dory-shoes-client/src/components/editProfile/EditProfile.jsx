@@ -176,7 +176,7 @@ const EditProfile = () => {
                     }}
                   >
                     <img
-                      src={fav.product?.imageUrl}
+                      src={`${import.meta.env.BASE_URL}${fav.product?.imageUrl.replace(/^\//, '')}`}
                       alt={fav.product?.name}
                       style={{
                         width: "60px",

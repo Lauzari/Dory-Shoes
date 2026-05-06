@@ -69,7 +69,7 @@ const Home = () => {
           {[...Array(9)].map((_, i) => (
             <div key={i} className={`carousel-item ${i === 0 ? "active" : ""}`}>
               <img
-                src={`/images/Carrusel/foto${i + 1}.jpg`}
+                src={`${import.meta.env.BASE_URL}images/Carrusel/foto${i + 1}.jpg`}
                 className="d-block w-100 imagen-carrusel"
                 alt={`Producto ${i + 1}`}
               />
@@ -102,7 +102,7 @@ const Home = () => {
           <Link to={`/categoria/${cat.nombre.toLowerCase()}`} key={i}>
             <div className="categoria-contenedor">
               <img
-                src={cat.imagen}
+                src={`${import.meta.env.BASE_URL}${cat.imagen.replace(/^\//, '')}`}
                 alt={cat.nombre}
                 className="imagen-categoria"
               />
