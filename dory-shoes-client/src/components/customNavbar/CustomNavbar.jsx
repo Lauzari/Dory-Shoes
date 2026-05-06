@@ -114,7 +114,7 @@ const CustomNavbar = () => {
 
         <Navbar.Brand as={Link} to="/" onClick={handleClose}>
           <img
-            src={`${import.meta.env.BASE_URL}images/Dory-Shoes-Logo.jpg`}
+            src={`${import.meta.env.BASE_URL}images/DoryShoes-Logo.jpg`}
             className="d-inline-block align-top"
             alt="Logo de Dory Shoes"
           />
